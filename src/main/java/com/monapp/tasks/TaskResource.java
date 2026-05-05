@@ -3,6 +3,7 @@ package com.monapp.tasks;
 import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -41,7 +42,7 @@ public class TaskResource {
 
     @POST
     @RolesAllowed("user")
-    public Response createTask(Task task) {
+    public Response createTask(@Valid Task task) {
         Task created = taskService.creer(task);
         return Response.status(Response.Status.CREATED).entity(created).build();
     }
@@ -49,7 +50,7 @@ public class TaskResource {
     @PUT
     @Path("/{id}")
     @RolesAllowed("admin")
-    public Response modify(@PathParam("id") Long id, Task modified) {
+    public Response modify(@PathParam("id") Long id, @Valid Task modified) {
         Task updated = taskService.modifier(id, modified);
         return null == updated ?
                 Response.status(Response.Status.NOT_FOUND).build() :
