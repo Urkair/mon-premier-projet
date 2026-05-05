@@ -1,6 +1,7 @@
 package com.monapp.tasks;
 
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -23,12 +24,14 @@ public class TaskResource {
      * @return List<Task>
      */
     @GET
+    @RolesAllowed("user")
     public List<Task> listerTasks() {
         return taskService.listerTout();
     }
 
     @GET
     @Path("/{id}")
+    @RolesAllowed("user")
     public Response findById(@PathParam("id") Long id) {
         Task task = taskService.trouverParId(id);
         return null == task ?
@@ -37,6 +40,7 @@ public class TaskResource {
     }
 
     @POST
+    @RolesAllowed("user")
     public Response createTask(Task task) {
         Task created = taskService.creer(task);
         return Response.status(Response.Status.CREATED).entity(created).build();
@@ -44,6 +48,7 @@ public class TaskResource {
 
     @PUT
     @Path("/{id}")
+    @RolesAllowed("admin")
     public Response modify(@PathParam("id") Long id, Task modified) {
         Task updated = taskService.modifier(id, modified);
         return null == updated ?
@@ -53,9 +58,9 @@ public class TaskResource {
 
     @DELETE
     @Path("/{id}")
+    @RolesAllowed("admin")
     public Response delete(@PathParam("id") Long id) {
-        boolean deleted = taskService.supprimer(id);
-        return deleted ?
+        return taskService.supprimer(id) ?
                 Response.noContent().build() :
                 Response.status(Response.Status.NOT_FOUND).build();
     }
