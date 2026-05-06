@@ -10,6 +10,7 @@ import org.apache.commons.lang3.Strings;
 
 import java.nio.charset.Charset;
 import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 
 @Path("/auth")
@@ -58,6 +59,16 @@ public class AuthResource {
         return null == user ?
                 Response.status(Response.Status.NOT_FOUND).build() :
                 Response.ok(user).build();
+    }
+
+    @GET
+    @Path("/all")
+    @RolesAllowed("admin")
+    public Response getUser() {
+        List<Utilisateur> users = authService.findAll();
+        return null == users ?
+                Response.status(Response.Status.NOT_FOUND).build() :
+                Response.ok(users).build();
     }
 
     @PUT

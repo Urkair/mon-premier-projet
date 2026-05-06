@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 
 import java.nio.charset.Charset;
 import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 
 @ApplicationScoped
@@ -19,6 +20,10 @@ public class AuthService {
 
     public Utilisateur findById(String username) {
         return Utilisateur.findById(username);
+    }
+
+    public List<Utilisateur> findAll() {
+        return Utilisateur.listAll();
     }
 
     @Transactional
