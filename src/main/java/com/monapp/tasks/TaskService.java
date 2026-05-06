@@ -3,16 +3,10 @@ package com.monapp.tasks;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @ApplicationScoped
 public class TaskService {
-
-    private final Map<Long, Task> tasks = new LinkedHashMap<>();
-    private final AtomicLong counter = new AtomicLong(1);
 
     public List<Task> listerTout() {
         return Task.listAll();

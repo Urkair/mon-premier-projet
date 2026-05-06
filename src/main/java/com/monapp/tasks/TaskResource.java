@@ -1,6 +1,7 @@
 package com.monapp.tasks;
 
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -25,14 +26,14 @@ public class TaskResource {
      * @return List<Task>
      */
     @GET
-    @RolesAllowed("user")
+    @PermitAll
     public List<Task> listerTasks() {
         return taskService.listerTout();
     }
 
     @GET
     @Path("/{id}")
-    @RolesAllowed("user")
+    @PermitAll
     public Response findById(@PathParam("id") Long id) {
         Task task = taskService.trouverParId(id);
         return null == task ?
@@ -41,7 +42,7 @@ public class TaskResource {
     }
 
     @POST
-    @RolesAllowed("user")
+    @PermitAll
     public Response createTask(@Valid Task task) {
         Task created = taskService.creer(task);
         return Response.status(Response.Status.CREATED).entity(created).build();
