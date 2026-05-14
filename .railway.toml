@@ -1,7 +1,3 @@
-[build]
-builder = "nixpacks"
-buildCommand = "./mvnw package -DskipTests"
-
 [deploy]
 startCommand = "java -Dquarkus.http.port=${PORT} -jar target/quarkus-app/quarkus-run.jar"
 healthcheckPath = "/q/health"
